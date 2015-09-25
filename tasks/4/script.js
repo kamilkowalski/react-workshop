@@ -19,3 +19,38 @@ var libraries = [
     { name: 'Koa', url: 'http://koajs.com/'},
 ];
 
+var Search = React.createClass({
+  componentDidMount: function() {
+    var searchFieldNode = React.findDOMNode(this.refs.searchField);
+    searchFieldNode.focus();
+    console.log(searchFieldNode);
+  },
+  getInitialState: function() {
+    return { filteredUrls: this.props.urls };
+  },
+  performSearch: function(event) {
+    var searchValue = event.target.value;
+    var filtered = this.props.urls.filter(function(element) {
+      var expr = new RegExp(searchValue, "i");
+      return element.name.match(expr) !== null;
+    });
+
+    this.setState({
+      filteredUrls: filtered
+    });
+  },
+  render: function() {
+    return <div>
+      <input onChange={this.performSearch} ref="searchField" type="text" />
+      <ul>
+        {
+          this.state.filteredUrls.map(function(el) {
+            return <li key={el.url}><a href={el.url}>{el.name}</a></li>;
+          })
+        }
+      </ul>
+    </div>;
+  }
+});
+
+React.render(<Search urls={libraries}/>, document.body);

@@ -16,7 +16,7 @@ var SPEED = {
     MY_BROWSER_HATES_ME: 1.0
 };
 
-var currentSpeed = SPEED.MEDIUM;
+var currentSpeed = SPEED.FAST;
 
 module.exports = function(server, twitterConfig) {
     var T = new Twit(twitterConfig);
